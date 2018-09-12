@@ -1,4 +1,4 @@
-/* global describe, it */
+/* global describe, before, it */
 
 // const assert = require('assert')
 const chai = require('chai')
@@ -6,25 +6,29 @@ const utils = require('../index')
 const path = require('path')
 const manifest = require(path.resolve('package.json'))
 
+let napiVersion = utils.getNapiVersion()
+console.log('Node v' + process.versions.node + ' - ' +
+            'N-API v' + napiVersion + ' - ' +
+            'process.versions.napi ' + process.versions.napi)
+
 chai.should()
 chai.expect()
 
 describe('napi-build-utils', function () {
-  it('manifest validates', function () {
+  before('manifest validates', function () {
     manifest.should.have.property('binary')
-    manifest.binary.should.have.property('for_testing_purposes')
+    manifest.binary.should.have.property('note')
     manifest.binary.should.have.property('napi_versions')
     manifest.binary.napi_versions.should.be.instanceof(Array)
     manifest.binary.napi_versions.length.should.equal(3)
   })
   it('isNapiRuntime', () => {
-    var isNapi = utils.isNapiRuntime('napi')
+    let isNapi = utils.isNapiRuntime('napi')
     isNapi.should.equal(true)
     isNapi = utils.isNapiRuntime('n-api')
     isNapi.should.equal(false)
   })
   it('getNapiVersion', function () {
-    var napiVersion = utils.getNapiVersion()
     if (process.versions.napi) {
       napiVersion.should.equal(process.versions.napi)
     } else {
@@ -34,7 +38,7 @@ describe('napi-build-utils', function () {
     }
   })
   it('getNapiBuildVersions', function () {
-    var buildVersions = utils.getNapiBuildVersions()
+    let buildVersions = utils.getNapiBuildVersions()
     buildVersions.should.be.instanceof(Array)
     buildVersions.length.should.equal(2)
     buildVersions[0].should.equal('2')
@@ -47,7 +51,6 @@ describe('napi-build-utils', function () {
     utils.packageSupportsVersion(4).should.equal(false)
   })
   it('isSupportedVersion', function () {
-    var napiVersion = utils.getNapiVersion()
     if (napiVersion === '2' || napiVersion === '3') {
       utils.isSupportedVersion('1').should.equal(false)
       utils.isSupportedVersion('2').should.equal(napiVersion >= 2)
@@ -61,8 +64,8 @@ describe('napi-build-utils', function () {
     }
   })
   it('getBestNapiBuildVersion', function () {
-    var napiVersion = parseInt(utils.getNapiVersion(), 10)
-    var bestBuildVersion = parseInt(utils.getBestNapiBuildVersion(), 10)
+    let napiVersion = parseInt(utils.getNapiVersion(), 10)
+    let bestBuildVersion = parseInt(utils.getBestNapiBuildVersion(), 10)
     if (napiVersion < 2) {
       bestBuildVersion.should.equal(undefined)
     } else if (napiVersion === 2) {
@@ -74,26 +77,42 @@ describe('napi-build-utils', function () {
     }
   })
   it('logUnsupportedVersion', function () {
-    var log = {
-      count: 0,
-      warn: function () {
-        this.count++
-      }
-    }
-    var napiVersion = parseInt(utils.getNapiVersion(), 10)
-    utils.logUnsupportedVersion('1', log)
-    log.count.should.equal(1)
-    log.count = 0
-    utils.logUnsupportedVersion('2', log)
-    log.count.should.equal((napiVersion >= 2) ? 0 : 1)
-    log.count = 0
-    utils.logUnsupportedVersion('3', log)
-    log.count.should.equal((napiVersion >= 3) ? 0 : 1)
-    log.count = 0
-    utils.logUnsupportedVersion('4', log)
-    log.count.should.equal(1)
-    log.count = 0
+    let napiVersion = parseInt(utils.getNapiVersion(), 10)
+    unsupportedLog('1').length.should.equal(1)
+    unsupportedLog('2').length.should.equal((napiVersion >= 2) ? 0 : 1)
+    unsupportedLog('3').length.should.equal((napiVersion >= 3) ? 0 : 1)
+    unsupportedLog('4').length.should.equal(1)
   })
-  it('logMissingNapiVersions' /*, function () {
-  } */)
+  it('logMissingNapiVersions', function () {
+    let napiVersion = parseInt(utils.getNapiVersion(), 10)
+    let prebuild = []
+    if (napiVersion >= 2) prebuild.push({ runtime: 'napi', target: '2' })
+    if (napiVersion >= 3) prebuild.push({ runtime: 'napi', target: '3' })
+    missingLog('1', prebuild).length.should.equal(1)
+    missingLog('2', prebuild).length.should.equal((napiVersion >= 2) ? 0 : 1)
+    missingLog('3', prebuild).length.should.equal((napiVersion >= 3) ? 0 : 1)
+    missingLog('4', prebuild).length.should.equal(1)
+  })
 })
+
+function unsupportedLog (napiVersion) {
+  let log = {
+    contents: [],
+    warn: function (msg) {
+      this.contents.push(msg)
+    }
+  }
+  utils.logUnsupportedVersion(napiVersion, log)
+  return log.contents
+}
+
+function missingLog (target, prebuild) {
+  let log = {
+    contents: [],
+    warn: function (msg) {
+      this.contents.push(msg)
+    }
+  }
+  utils.logMissingNapiVersions(target, prebuild, log)
+  return log.contents
+}

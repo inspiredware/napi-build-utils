@@ -1,10 +1,12 @@
 # napi-build-utils
 
+[![npm](https://img.shields.io/npm/v/napi-build-utils.svg)](https://www.npmjs.com/package/napi-build-utils)
 ![Node version](https://img.shields.io/node/v/prebuild.svg)
+[![Build Status](https://travis-ci.org/inspiredware/napi-build-utils.svg?branch=master)](https://travis-ci.org/inspiredware/napi-build-utils) 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
-A set of utilities to assist developers of tools building [N-API](https://nodejs.org/api/n-api.html#n_api_n_api) native add-ons.
+A set of utilities to assist developers of tools that build [N-API](https://nodejs.org/api/n-api.html#n_api_n_api) native add-ons.
 
 ## Background
 
@@ -16,7 +18,11 @@ Unlike the modules this code is designed to facilite building, this module is wr
 
 ## Quick start
 
-The module exports a set of functions documented [here](./index.md).
+```bash
+$ npm install napi-build-utils
+```
+
+The module exports a set of functions documented [here](./index.md). For exmaple:
 
 ```javascript
 var napiBuildUtils = require('napi-build-utils');
@@ -39,4 +45,4 @@ Modules that are built against a specific N-API version will continue to operate
 
 ## Support
 
-If you run into issues or limitations, please file an issue and we'll take a look at it. Pull requests are also welcome.  
+If you run into problems or limitations, please file an issue and we'll take a look. Pull requests are also welcome.  

@@ -1,14 +1,13 @@
 {
   "name": "napi-build-utils",
   "version": "1.0.0",
-  "description": "A set of utilities to assist developers of tools building N-API native add-ons",
+  "description": "A set of utilities to assist developers of tools that build N-API native add-ons",
   "main": "index.js",
   "scripts": {
-    "doc": "./node_modules/.bin/jsdoc2md index.js >index.md",
+    "doc": "jsdoc2md index.js >index.md",
     "test": "mocha test/ && npm run lint",
     "lint": "standard",
     "prepublishOnly": "npm run test && npm run doc"
-
   },
   "keywords": [
     "n-api"
@@ -30,7 +29,11 @@
     "standard": "^12.0.1"
   },
   "binary": {
-    "for_testing_purposes": "This is not an N-API module.",
-    "napi_versions": [2,2,3]
-  }  
+    "note": "napi-build-tools is not an N-API module. This entry is for unit testing.",
+    "napi_versions": [
+      2,
+      2,
+      3
+    ]
+  }
 }
