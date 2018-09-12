@@ -113,16 +113,21 @@ exports.logUnsupportedVersion = function (napiVerison, log) {
  * @private
  */
 exports.logMissingNapiVersions = function (target, prebuild, log) {
-  var targets = [].concat(target)
-  targets.forEach(function (napiVersion) {
-    if (!prebuildExists(prebuild, napiVersion)) {
-      if (exports.packageSupportsVersion(parseInt(napiVersion, 10))) {
-        log.warn('This Node instance does not support N-API version ' + napiVersion)
-      } else {
-        log.warn('This package does not support N-API version ' + napiVersion)
+  if (exports.getNapiBuildVersions()) {
+    var targets = [].concat(target)
+    targets.forEach(function (napiVersion) {
+      if (!prebuildExists(prebuild, napiVersion)) {
+        if (exports.packageSupportsVersion(parseInt(napiVersion, 10))) {
+          log.warn('This Node instance does not support N-API version ' + napiVersion)
+        } else {
+          log.warn('This package does not support N-API version ' + napiVersion)
+        }
       }
-    }
-  })
+    })
+  } else {
+    log.error('Builds with runtime \'napi\' require a binary.napi_versions ' +
+              'property on the package.json file')
+  }
 }
 
 /**
@@ -138,8 +143,10 @@ exports.logMissingNapiVersions = function (target, prebuild, log) {
  * @private
  */
 var prebuildExists = function (prebuild, napiVersion) {
-  for (var i = 0; i < prebuild.length; i++) {
-    if (prebuild[i].target === napiVersion) return true
+  if (prebuild) {
+    for (var i = 0; i < prebuild.length; i++) {
+      if (prebuild[i].target === napiVersion) return true
+    }
   }
   return false
 }

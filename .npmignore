@@ -1,3 +1,5 @@
 npm-debug.log
 test
 appveyor.yml
+.travis.yml
+.vscode/
