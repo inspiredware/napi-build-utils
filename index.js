@@ -96,7 +96,7 @@ exports.logUnsupportedVersion = function (napiVerison, log) {
  * (2) `--all` specifies all N-API versions supported by the package.
  * (3) Neither of these specifies to build the single "best version available."
  *
- * `prebuild` is an array of objects in the form `{runtime: 'napi': target: '2'}`.
+ * `prebuild` is an array of objects in the form `{runtime: 'napi', target: '2'}`.
  * The array contains the list of N-API versions that are supported by both the
  * package being built and the currently running Node instance.
  *
@@ -107,7 +107,7 @@ exports.logUnsupportedVersion = function (napiVerison, log) {
  * Node.
  *
  * @param {(Array<string>|string)} target The N-API version(s) to check. Target is
- * @param {Object} prebuild A config object created by the `prebuild` package.
+ * @param {Array<Object>} prebuild A config object created by the `prebuild` package.
  * @param {Object} log The log object to which the warnings are to be issued.
  * Must implement the `warn` method.
  * @private
@@ -179,7 +179,7 @@ exports.getBestNapiBuildVersion = function () {
 }
 
 /**
- * Returns an array of N-APi versions supported by the package.
+ * Returns an array of N-API versions supported by the package.
  *
  * @returns {Array<string>}
  */
