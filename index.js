@@ -37,11 +37,11 @@ exports.isNapiRuntime = function (runtime) {
  * Determines whether the specified N-API version is supported
  * by both the currently running Node instance and the package.
  *
- * @param {string} napiVerison The N-API version to check.
+ * @param {string} napiVersion The N-API version to check.
  * @returns {boolean}
  */
-exports.isSupportedVersion = function (napiVerison) {
-  var version = parseInt(napiVerison, 10)
+exports.isSupportedVersion = function (napiVersion) {
+  var version = parseInt(napiVersion, 10)
   return version <= exports.getNapiVersion() && exports.packageSupportsVersion(version)
 }
 
@@ -50,15 +50,15 @@ exports.isSupportedVersion = function (napiVerison) {
  * The N-API version must be preseent in the `package.json`
  * `binary.napi_versions` array.
  *
- * @param {number} napiVerison The N-API version to check.
+ * @param {number} napiVersion The N-API version to check.
  * @returns {boolean}
  * @private
  */
-exports.packageSupportsVersion = function (napiVerison) {
+exports.packageSupportsVersion = function (napiVersion) {
   if (pkg.binary && pkg.binary.napi_versions &&
       pkg.binary.napi_versions instanceof Array) {
     for (var i = 0; i < pkg.binary.napi_versions.length; i++) {
-      if (pkg.binary.napi_versions[i] === napiVerison) return true
+      if (pkg.binary.napi_versions[i] === napiVersion) return true
     };
   };
   return false
@@ -69,16 +69,16 @@ exports.packageSupportsVersion = function (napiVerison) {
  * by the current Node instance or if the N-API version is not supported
  * by the package.
  *
- * @param {string} napiVerison The N-API version to check.
+ * @param {string} napiVersion The N-API version to check.
  * @param {Object} log The log object to which the warnings are to be issued.
  * Must implement the `warn` method.
  */
-exports.logUnsupportedVersion = function (napiVerison, log) {
-  if (!exports.isSupportedVersion(napiVerison)) {
-    if (exports.packageSupportsVersion(napiVerison)) {
-      log.warn('This Node instance does not support N-API version ' + napiVerison)
+exports.logUnsupportedVersion = function (napiVersion, log) {
+  if (!exports.isSupportedVersion(napiVersion)) {
+    if (exports.packageSupportsVersion(napiVersion)) {
+      log.warn('This Node instance does not support N-API version ' + napiVersion)
     } else {
-      log.warn('This package does not support N-API version ' + napiVerison)
+      log.warn('This package does not support N-API version ' + napiVersion)
     }
   }
 }

@@ -51,15 +51,17 @@ describe('napi-build-utils', function () {
     utils.packageSupportsVersion(4).should.equal(false)
   })
   it('isSupportedVersion', function () {
-    if (napiVersion === '2' || napiVersion === '3') {
+    if (napiVersion === '1') {
+      // test not supported
+    } else if (napiVersion === '2' || napiVersion === '3') {
       utils.isSupportedVersion('1').should.equal(false)
       utils.isSupportedVersion('2').should.equal(napiVersion >= 2)
       utils.isSupportedVersion('3').should.equal(napiVersion >= 3)
       utils.isSupportedVersion('4').should.equal(false)
     } else {
       utils.isSupportedVersion('1').should.equal(false)
-      utils.isSupportedVersion('2').should.equal(false)
-      utils.isSupportedVersion('3').should.equal(false)
+      utils.isSupportedVersion('2').should.equal(true)
+      utils.isSupportedVersion('3').should.equal(true)
       utils.isSupportedVersion('4').should.equal(false)
     }
   })
@@ -73,7 +75,7 @@ describe('napi-build-utils', function () {
     } else if (napiVersion === 3) {
       bestBuildVersion.should.equal(3)
     } else {
-      bestBuildVersion.should.equal(undefined)
+      bestBuildVersion.should.equal(3)
     }
   })
   it('logUnsupportedVersion', function () {

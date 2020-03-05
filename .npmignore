@@ -3,3 +3,4 @@ test
 appveyor.yml
 .travis.yml
 .vscode/
+*.tgz
