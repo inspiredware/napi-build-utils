@@ -69,7 +69,7 @@ supported by the current Node instance.
 <a name="module_napi-build-utils.getNapiBuildVersions"></a>
 
 ### napi-build-utils.getNapiBuildVersions() ⇒ <code>Array.&lt;string&gt;</code>
-Returns an array of N-APi versions supported by the package.
+Returns an array of N-API versions supported by the package.
 
 **Kind**: static method of [<code>napi-build-utils</code>](#module_napi-build-utils)  
 <a name="module_napi-build-utils.getNapiVersion"></a>
