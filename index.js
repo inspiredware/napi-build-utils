@@ -47,7 +47,7 @@ exports.isSupportedVersion = function (napiVersion) {
 
 /**
  * Determines whether the specified N-API version is supported by the package.
- * The N-API version must be preseent in the `package.json`
+ * The N-API version must be present in the `package.json`
  * `binary.napi_versions` array.
  *
  * @param {number} napiVersion The N-API version to check.
@@ -134,7 +134,7 @@ exports.logMissingNapiVersions = function (target, prebuild, log) {
  * Determines whether the specified N-API version exists in the prebuild
  * configuration object.
  *
- * Note that this function is speicifc to the `prebuild` and `prebuild-install`
+ * Note that this function is specific to the `prebuild` and `prebuild-install`
  * packages.
  *
  * @param {Object} prebuild A config object created by the `prebuild` package.
