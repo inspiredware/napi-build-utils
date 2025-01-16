@@ -13,7 +13,7 @@ The main repository can be found
     * [.isSupportedVersion(napiVersion)](#module_napi-build-utils.isSupportedVersion) ⇒ <code>boolean</code>
     * [.logUnsupportedVersion(napiVersion, log)](#module_napi-build-utils.logUnsupportedVersion)
     * [.getBestNapiBuildVersion()](#module_napi-build-utils.getBestNapiBuildVersion) ⇒ <code>number</code> \| <code>undefined</code>
-    * [.getNapiBuildVersions()](#module_napi-build-utils.getNapiBuildVersions) ⇒ <code>Array.&lt;string&gt;</code>
+    * [.getNapiBuildVersions()](#module_napi-build-utils.getNapiBuildVersions) ⇒ <code>[ &#x27;Array&#x27; ].&lt;string&gt;</code>
     * [.getNapiVersion()](#module_napi-build-utils.getNapiVersion) ⇒ <code>string</code> \| <code>undefined</code>
 
 <a name="module_napi-build-utils.isNapiRuntime"></a>
@@ -68,7 +68,7 @@ supported by the current Node instance.
 **Kind**: static method of [<code>napi-build-utils</code>](#module_napi-build-utils)  
 <a name="module_napi-build-utils.getNapiBuildVersions"></a>
 
-### napi-build-utils.getNapiBuildVersions() ⇒ <code>Array.&lt;string&gt;</code>
+### napi-build-utils.getNapiBuildVersions() ⇒ <code>[ &#x27;Array&#x27; ].&lt;string&gt;</code>
 Returns an array of N-API versions supported by the package.
 
 **Kind**: static method of [<code>napi-build-utils</code>](#module_napi-build-utils)  

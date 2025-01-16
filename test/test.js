@@ -20,7 +20,7 @@ describe('napi-build-utils', function () {
     manifest.binary.should.have.property('note')
     manifest.binary.should.have.property('napi_versions')
     manifest.binary.napi_versions.should.be.instanceof(Array)
-    manifest.binary.napi_versions.length.should.equal(3)
+    manifest.binary.napi_versions.length.should.equal(4)
   })
   it('isNapiRuntime', () => {
     let isNapi = utils.isNapiRuntime('napi')
@@ -40,9 +40,10 @@ describe('napi-build-utils', function () {
   it('getNapiBuildVersions', function () {
     let buildVersions = utils.getNapiBuildVersions()
     buildVersions.should.be.instanceof(Array)
-    buildVersions.length.should.equal(2)
+    buildVersions.length.should.equal(3)
     buildVersions[0].should.equal('2')
     buildVersions[1].should.equal('3')
+    buildVersions[2].should.equal('10')
   })
   it('packageSupportsVersion', function () {
     utils.packageSupportsVersion(1).should.equal(false)
@@ -74,6 +75,8 @@ describe('napi-build-utils', function () {
       bestBuildVersion.should.equal(2)
     } else if (napiVersion === 3) {
       bestBuildVersion.should.equal(3)
+    } else if (napiVersion >= 10) {
+      bestBuildVersion.should.equal(10)
     } else {
       bestBuildVersion.should.equal(3)
     }

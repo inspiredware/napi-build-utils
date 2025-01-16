@@ -56,7 +56,7 @@ exports.isSupportedVersion = function (napiVersion) {
  */
 exports.packageSupportsVersion = function (napiVersion) {
   if (pkg.binary && pkg.binary.napi_versions &&
-      pkg.binary.napi_versions instanceof Array) {
+      pkg.binary.napi_versions instanceof Array) { // integer array
     for (var i = 0; i < pkg.binary.napi_versions.length; i++) {
       if (pkg.binary.napi_versions[i] === napiVersion) return true
     };
@@ -165,10 +165,11 @@ var prebuildExists = function (prebuild, napiVersion) {
  */
 exports.getBestNapiBuildVersion = function () {
   var bestNapiBuildVersion = 0
-  var napiBuildVersions = exports.getNapiBuildVersions(pkg)
+  var napiBuildVersions = exports.getNapiBuildVersions(pkg) // array of integer strings
   if (napiBuildVersions) {
     var ourNapiVersion = exports.getNapiVersion()
-    napiBuildVersions.forEach(function (napiBuildVersion) {
+    napiBuildVersions.forEach(function (napiBuildVersionStr) {
+      var napiBuildVersion = parseInt(napiBuildVersionStr, 10)
       if (napiBuildVersion > bestNapiBuildVersion &&
         napiBuildVersion <= ourNapiVersion) {
         bestNapiBuildVersion = napiBuildVersion
@@ -181,7 +182,7 @@ exports.getBestNapiBuildVersion = function () {
 /**
  * Returns an array of N-API versions supported by the package.
  *
- * @returns {Array<string>}
+ * @returns {Array<string>|undefined}
  */
 exports.getNapiBuildVersions = function () {
   var napiBuildVersions = []
@@ -204,7 +205,7 @@ exports.getNapiBuildVersions = function () {
  * @returns {string|undefined}
  */
 exports.getNapiVersion = function () {
-  var version = process.versions.napi // string, can be undefined
+  var version = process.versions.napi // integer string, can be undefined
   if (!version) { // this code should never need to be updated
     if (versionArray[0] === 9 && versionArray[1] >= 3) version = '2' // 9.3.0+
     else if (versionArray[0] === 8) version = '1' // 8.0.0+
