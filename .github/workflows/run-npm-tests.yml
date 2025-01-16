@@ -3,7 +3,7 @@ name: Run npm Tests
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "jschlight/issue6" ]
   pull_request:
     branches: [ "main" ]
 
