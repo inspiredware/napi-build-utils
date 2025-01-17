@@ -1,6 +1,6 @@
 {
   "name": "napi-build-utils",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "A set of utilities to assist developers of tools that build N-API native add-ons",
   "main": "index.js",
   "scripts": {
@@ -35,7 +35,8 @@
     "napi_versions": [
       2,
       2,
-      3
+      3,
+      10
     ]
   }
 }
